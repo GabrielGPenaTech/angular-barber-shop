@@ -11,21 +11,21 @@ export interface UpdateClientRequest {
 }
 
 export interface SaveClientResponse {
-  id: string
+  id: number
   name: string
   email: string
   phone: string
 }
 
 export interface UpdateClientResponse {
-  id: string
+  id: number
   name: string
   email: string
   phone: string
 }
 
 export interface ListClientResponse{
-  id: string
+  id: number
   name: string
   email: string
   phone: string
@@ -33,7 +33,7 @@ export interface ListClientResponse{
 
 
 export interface DetailsClientResponse {
-  id: string
+  id: number
   name: string
   email: string
   phone: string
