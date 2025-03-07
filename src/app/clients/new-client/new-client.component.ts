@@ -23,7 +23,6 @@ export class NewClientComponent implements OnDestroy{
 
   private httpSubscription?: Subscription
 
-
   constructor(
     @Inject(SERVICES_TOKEN.HTTP.CLIENT) private readonly httpService: IClientService,
     @Inject(SERVICES_TOKEN.SNACKBAR) private readonly snackbarManager: ISankBarManagerService,
@@ -36,11 +35,10 @@ export class NewClientComponent implements OnDestroy{
     }
   }
 
-
   onSubmitClient(value: ClientModelForm) {
     const {id, ...request } = value
 
-    this.httpService.save(request).subscribe(_ => {
+   this.httpSubscription = this.httpService.save(request).subscribe(_ => {
       this.snackbarManager.show("Usuário cadastrado com sucesso!")
       this.router.navigate(['clients/list'])
     })
