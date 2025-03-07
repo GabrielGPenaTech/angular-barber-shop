@@ -2,10 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { SERVICES_TOKEN } from '../../services/service.token';
 import { IClientService } from '../../services/api-client/clients/iclients.service';
 import { ClientsService } from '../../services/api-client/clients/clients.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-list-clients',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './list-clients.component.html',
   styleUrl: './list-clients.component.scss',
   providers: [
