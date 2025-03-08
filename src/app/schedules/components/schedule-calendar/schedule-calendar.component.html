@@ -1,1 +1,115 @@
-<p>schedule-calendar works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="container">
+        <div class="row">
+          <div class="col-4">
+            <mat-form-field>
+              <mat-label>Inicio</mat-label>
+              <input
+                id="startAt"
+                name="startAt"
+                [matTimepicker]="startAtPicker"
+                [ngModelOptions]="{updatedOn: 'blur'}"
+                #startAtModel="ngModel"
+                (ngModelChange)="onTimeChange($event)"
+                [(ngModel)]="newSchedule.startAt"
+                required=""
+              />
+              <mat-timepicker />
+              <mat-timepicker-toggle [for]="startAtPicker" matSuffix/>
+            </mat-form-field>
+          </div>
+
+          <div class="col-4">
+            <mat-form-field>
+              <mat-label>Término</mat-label>
+              <input
+                id="endAt"
+                name="endAt"
+                [matTimepicker]="endAtPicker"
+                [ngModelOptions]="{updatedOn: 'blur'}"
+                #endAtModel="ngModel"
+                [(ngModel)]="newSchedule.endAt"
+                disabled
+              />
+              <mat-timepicker />
+              <mat-timepicker-toggle [for]="endAtPicker" matSuffix/>
+            </mat-form-field>
+          </div>
+
+          <div class="col-3">
+            <mat-form-field>
+              <mat-label>Selecione um cliente</mat-label>
+              <mat-select
+                name="clientId"
+                id="clientId"
+                #clientModel="ngModel"
+                [(ngModel)]="newSchedule.clientId"
+                required=""
+              >
+                @for (client of clients; track $index) {
+                  <mat-option [value]="client.id">{{client.name}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-1">
+            <button
+              mat-mini-fab
+              extended matTooltip="incluir agendamento do dia"
+              [disabled]="form.invalid"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <mat-card class="calendar-card">
+        <mat-calendar [(selected)]="selected"></mat-calendar>
+      </mat-card>
+    </div>
+
+    <div class="col-6">
+      <table mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container>
+          <th mt-header-cell *matHeaderCellDef>Inicio</th>
+          <td mt-cell *matCellDef="let schedule">{{schedule.startAt | date: 'HH:mm a'}}</td>
+        </ng-container>
+
+        <ng-container>
+          <th mt-header-cell *matHeaderCellDef>Término</th>
+          <td mt-cell *matCellDef="let schedule">{{schedule.endAt | date: 'HH:mm a'}}</td>
+        </ng-container>
+
+        <ng-container>
+          <th mt-header-cell *matHeaderCellDef>Cliente</th>
+          <td mt-cell *matCellDef="let schedule">{{schedule.clientName}}</td>
+        </ng-container>
+
+        <ng-container>
+          <th mt-header-cell *matHeaderCellDef>Ações</th>
+          <td mt-cell *matCellDef="let schedule">
+            <button
+              mat-mini-fab
+              extended
+              matTooltip="excluir"
+              (click)="requestDelete(schedule)"
+            ></button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[3, 6, 9]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>
