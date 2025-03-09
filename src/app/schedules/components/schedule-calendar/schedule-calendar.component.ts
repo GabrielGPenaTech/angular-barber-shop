@@ -8,9 +8,9 @@ import {
   OnChanges,
   SimpleChanges,
   AfterViewInit,
-  type OnDestroy
+  OnDestroy
 } from '@angular/core';
-import { FormControl, FormsModule, type NgForm } from '@angular/forms';
+import { FormControl, FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -32,7 +32,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { YesNoDialogComponent } from '../../../commons/components/yes-no-dialog/yes-no-dialog.component';
-import type { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-schedule-calendar',
@@ -54,6 +55,7 @@ import type { Subscription } from 'rxjs';
   templateUrl: './schedule-calendar.component.html',
   styleUrl: './schedule-calendar.component.scss',
   providers: [
+    provideNativeDateAdapter(),
     { provide: SERVICES_TOKEN.DIALOG, useClass: DialogManagerService }
   ]
 })
@@ -61,7 +63,7 @@ export class ScheduleCalendarComponent implements AfterViewInit, OnChanges, OnDe
 
   private subscription?: Subscription
 
-  private _selected: Date = new Date()
+  selected: Date = new Date()
 
   displayedColumns: string[] = ['startAt', 'endAt', 'client', 'actions']
 
@@ -87,14 +89,14 @@ export class ScheduleCalendarComponent implements AfterViewInit, OnChanges, OnDe
   ) { }
 
   getSelected(): Date {
-    return this._selected
+    return this.selected
   }
 
   setSelected(selected: Date) {
-    if(this._selected.getTime() !== selected.getTime()) {
+    if(this.selected.getTime() !== selected.getTime()) {
       this.onDateChange.emit(selected)
       this.buildTable()
-      this._selected = selected
+      this.selected = selected
     }
   }
 
@@ -123,20 +125,21 @@ export class ScheduleCalendarComponent implements AfterViewInit, OnChanges, OnDe
   }
 
   onSubmit(form: NgForm) {
-    const startAt = new Date(this._selected)
-    const endAt = new Date(this._selected)
+    const startAt = new Date(this.selected)
+    const endAt = new Date(this.selected)
     startAt.setHours(this.newSchedule.startAt!.getHours(), this.newSchedule.startAt!.getMinutes())
     endAt.setHours(this.newSchedule.endAt!.getHours(), this.newSchedule.endAt!.getMinutes())
 
     const saved: ClientScheduleAppointmentModel = {
       id: -1,
-      day: this._selected.getDate(),
+      day: this.selected.getDate(),
       startAt,
       endAt,
       clientId: this.newSchedule.clientId!,
       clientName: this.clients.find(client => client.id === this.newSchedule.clientId)!.name
     }
 
+    this.monthSchedule.scheduleAppointments.push(saved)
     this.onScheduleClient.emit(saved)
     this.buildTable()
     form.resetForm()
@@ -161,9 +164,9 @@ export class ScheduleCalendarComponent implements AfterViewInit, OnChanges, OnDe
 
   private buildTable() {
     const appointments = this.monthSchedule.scheduleAppointments.filter(a =>
-      this.monthSchedule.year === this._selected.getFullYear() &&
-      this.monthSchedule.month === this._selected.getMonth() &&
-      a.day === this._selected.getDate()
+      this.monthSchedule.year === this.selected.getFullYear() &&
+      this.monthSchedule.month - 1 === this.selected.getMonth() &&
+      a.day === this.selected.getDate()
     )
 
     this.dataSource = new MatTableDataSource<ClientScheduleAppointmentModel>(appointments)

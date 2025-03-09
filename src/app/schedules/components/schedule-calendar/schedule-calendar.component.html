@@ -10,13 +10,13 @@
                 id="startAt"
                 name="startAt"
                 [matTimepicker]="startAtPicker"
-                [ngModelOptions]="{updatedOn: 'blur'}"
+                [ngModelOptions]="{updateOn: 'blur'}"
                 #startAtModel="ngModel"
                 (ngModelChange)="onTimeChange($event)"
                 [(ngModel)]="newSchedule.startAt"
                 required=""
               />
-              <mat-timepicker />
+              <mat-timepicker #startAtPicker/>
               <mat-timepicker-toggle [for]="startAtPicker" matSuffix/>
             </mat-form-field>
           </div>
@@ -28,12 +28,12 @@
                 id="endAt"
                 name="endAt"
                 [matTimepicker]="endAtPicker"
-                [ngModelOptions]="{updatedOn: 'blur'}"
+                [ngModelOptions]="{updateOn: 'blur'}"
                 #endAtModel="ngModel"
                 [(ngModel)]="newSchedule.endAt"
                 disabled
               />
-              <mat-timepicker />
+              <mat-timepicker #endAtPicker/>
               <mat-timepicker-toggle [for]="endAtPicker" matSuffix/>
             </mat-form-field>
           </div>
@@ -78,22 +78,22 @@
 
     <div class="col-6">
       <table mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container>
+        <ng-container matColumnDef="startAt">
           <th mt-header-cell *matHeaderCellDef>Inicio</th>
           <td mt-cell *matCellDef="let schedule">{{schedule.startAt | date: 'HH:mm a'}}</td>
         </ng-container>
 
-        <ng-container>
+        <ng-container  matColumnDef="endAt">
           <th mt-header-cell *matHeaderCellDef>Término</th>
           <td mt-cell *matCellDef="let schedule">{{schedule.endAt | date: 'HH:mm a'}}</td>
         </ng-container>
 
-        <ng-container>
+        <ng-container matColumnDef="client">
           <th mt-header-cell *matHeaderCellDef>Cliente</th>
           <td mt-cell *matCellDef="let schedule">{{schedule.clientName}}</td>
         </ng-container>
 
-        <ng-container>
+        <ng-container matColumnDef="actions">
           <th mt-header-cell *matHeaderCellDef>Ações</th>
           <td mt-cell *matCellDef="let schedule">
             <button
