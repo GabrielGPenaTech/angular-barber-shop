@@ -17,22 +17,22 @@ export class ClientsService implements IClientService {
   ) { }
 
   save(request: SaveClientRequest): Observable<SaveClientResponse> {
-    return this.http.post<SaveClientResponse>(`${this.basePath}client`, request)
+    return this.http.post<SaveClientResponse>(`${this.basePath}clients`, request)
   }
 
   update(id: number, request: UpdateClientRequest): Observable<UpdateClientResponse> {
-    return this.http.put<UpdateClientResponse>(`${this.basePath}client/${id}`, request)
+    return this.http.put<UpdateClientResponse>(`${this.basePath}clients/${id}`, request)
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.basePath}client/${id}`)
+    return this.http.delete<void>(`${this.basePath}clients/${id}`)
   }
 
   list(): Observable<ListClientResponse[]> {
-    return this.http.get<ListClientResponse[]>(`${this.basePath}client`)
+    return this.http.get<ListClientResponse[]>(`${this.basePath}clients`)
   }
 
   findByID(id: number): Observable<DetailsClientResponse> {
-    return this.http.get<DetailsClientResponse>(`${this.basePath}client/${id}`)
+    return this.http.get<DetailsClientResponse>(`${this.basePath}clients/${id}`)
   }
 }

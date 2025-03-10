@@ -20,7 +20,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 })
 export class ClientFormComponent {
 
-  @Input() client?: ClientModelForm = { id: 0, email: '', name: '', phone: ''};
+  @Input() client: ClientModelForm = { id: 0, email: '', name: '', phone: ''};
 
   @Output() clientSubmitted = new EventEmitter<ClientModelForm>();
 

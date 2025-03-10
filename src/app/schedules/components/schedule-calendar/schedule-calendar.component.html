@@ -7,6 +7,7 @@
             <mat-form-field>
               <mat-label>Inicio</mat-label>
               <input
+                matInput
                 id="startAt"
                 name="startAt"
                 [matTimepicker]="startAtPicker"
@@ -25,6 +26,7 @@
             <mat-form-field>
               <mat-label>Término</mat-label>
               <input
+                matInput
                 id="endAt"
                 name="endAt"
                 [matTimepicker]="endAtPicker"
@@ -101,7 +103,9 @@
               extended
               matTooltip="excluir"
               (click)="requestDelete(schedule)"
-            ></button>
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
           </td>
         </ng-container>
 

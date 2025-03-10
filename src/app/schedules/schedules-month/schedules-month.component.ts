@@ -82,15 +82,14 @@ export class SchedulesMonthComponent implements OnInit, OnDestroy{
     }
   }
 
-  onDataChange(event: Event) {
-    const date = new Date((event.target as HTMLInputElement).value);
+  onDateChange(date: Date) {
     this.selectedDate = date
     this.fetchSchedule(date)
   }
 
   private fetchSchedule(date: Date): void{
     const year = date.getFullYear()
-    const month = date.getMonth()
+    const month = date.getMonth() + 1
 
     this.subscriptions.push(
       this.httpScheduleService.listInMonth(year, month).subscribe(data => this.monthSchedule = data)
