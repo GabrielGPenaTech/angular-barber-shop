@@ -1,16 +1,30 @@
-<div class="menu">
-  <button mat-button [mat-menu-trigger-for]="clientMenu">
-    <div class="menu-title">Clientes</div>
-  </button>
-  <mat-menu #clientMenu="matMenu" yPosition="below">
-    <button mat-menu-item (click)="navigateTo('clients/new-client')">Cadastro</button>
-    <button mat-menu-item (click)="navigateTo('clients/list')">Listagem</button>
-  </mat-menu>
+<nav>
+  <app-card-header></app-card-header>
 
-  <button mat-button [mat-menu-trigger-for]="scheduleMenu">
-    <span class="menu-title">Agendar</span>
-  </button>
-  <mat-menu #scheduleMenu="matMenu" yPosition="below">
-    <button mat-menu-item (click)="navigateTo('schedules/month')">Calendário</button>
-  </mat-menu>
-</div>
+  <div class="menu">
+    <button  [mat-menu-trigger-for]="clientMenu">
+      <div class="menu-title">
+        <img src="img/user.svg" alt="">
+        Clientes
+      </div>
+    </button>
+    <mat-menu #clientMenu="matMenu" yPosition="below" xPosition="before">
+      <button mat-menu-item (click)="navigateTo('clients/new-client')">
+        Cadastro
+      </button>
+      <button mat-menu-item (click)="navigateTo('clients/list')">
+        Listagem
+      </button>
+    </mat-menu>
+
+    <button  [mat-menu-trigger-for]="scheduleMenu">
+      <span class="menu-title">
+        <img src="img/calendar.svg" alt="">
+        Agendar
+      </span>
+    </button>
+    <mat-menu #scheduleMenu="matMenu" yPosition="below" xPosition="before">
+      <button mat-menu-item (click)="navigateTo('schedules/month')">Calendário</button>
+    </mat-menu>
+  </div>
+</nav>

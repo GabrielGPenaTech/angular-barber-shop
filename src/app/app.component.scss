@@ -1,0 +1,12 @@
+.container_main {
+  display: grid;
+  grid-template-columns: 0.15fr 0.85fr;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+}
+
+.side-menu {
+  height: 100%;
+}
